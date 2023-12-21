@@ -1,18 +1,19 @@
 package main
 
 import (
-    "fmt"
-    "github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2"
+	"github.com/manisankarnambaruw/go-pro/controllers"
+	"github.com/manisankarnambaruw/go-pro/routes"
 )
 
 func main() {
-    app := fiber.New()
+	app := fiber.New()
 
-    // GET /api/register
-    app.Get("/api/*", func(c *fiber.Ctx) error {
-        msg := fmt.Sprintf("✋ %s", c.Params("*"))
-        return c.SendString(msg) // => ✋ register
-    })
+	app.Static("/", "./home.html")
 
-    app.Listen(":3000")
+	go controllers.RunHub()
+
+	routes.Setup(app)
+
+	app.Listen(":3000")
 }
